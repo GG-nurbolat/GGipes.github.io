@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GGipes — Быстрый и безопасный браузер Казахстана</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #0b1329;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Размытый сине-зеленоватый фон */
+        .bg-glow-1 {
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 210, 255, 0.4) 0%, rgba(3, 169, 244, 0) 70%);
+            filter: blur(80px);
+            z-index: -1;
+        }
+
+        .bg-glow-2 {
+            position: absolute;
+            top: 200px;
+            right: -100px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 230, 118, 0.35) 0%, rgba(0, 230, 118, 0) 70%);
+            filter: blur(100px);
+            z-index: -1;
+        }
+
+        .bg-glow-3 {
+            position: absolute;
+            bottom: 0;
+            left: 30%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 180, 216, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
+            filter: blur(90px);
+            z-index: -1;
+        }
+
+        /* Шапка */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            backdrop-filter: blur(12px);
+            background: rgba(11, 19, 41, 0.6);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #00e676, #00d2ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #00e676, #0088a9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0b1329;
+            font-weight: 900;
+            font-size: 18px;
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.5);
+        }
+
+        nav a {
+            color: #d1d5db;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #00e676;
+        }
+
+        /* Главный блок (Hero) */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 100px 20px 60px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .tag {
+            background: rgba(0, 230, 118, 0.1);
+            border: 1px solid rgba(0, 230, 118, 0.3);
+            color: #00e676;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(90deg, #00d2ff, #00e676);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #9ca3af;
+            margin-bottom: 40px;
+            max-width: 650px;
+        }
+
+        .download-btn {
+            background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+            background: linear-gradient(135deg, #00e676, #00b4d8);
+            color: #040914;
+            padding: 18px 42px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 30px;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(0, 230, 118, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0, 230, 118, 0.5);
+        }
+
+        .subtext {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 12px;
+        }
+
+        /* Преимущества / Сетка */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            border-radius: 16px;
+            padding: 30px;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .card:hover {
+            border-color: rgba(0, 230, 118, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #f3f4f6;
+        }
+
+        .card p {
+            color: #9ca3af;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        /* Футер */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #6b7280;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow-1"></div>
+    <div class="bg-glow-2"></div>
+    <div class="bg-glow-3"></div>
+
+    <header>
+        <div class="logo">
+            <div class="logo-icon">G</div>
+            GGipes
+        </div>
+        <nav>
+            <a href="#features">Возможности</a>
+            <a href="#privacy">Конфиденциальность</a>
+            <a href="#download">Скачать</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="tag">🇰🇿 Первый национальный браузер</div>
+        <h1>Быстрый, приватный и ваш. <span>GGipes</span></h1>
+        <p>Национальный браузер Казахстана с современной защитой данных, поддержкой сервисов eGov и высокой скоростью загрузки страниц.</p>
+        <a href="#" class="download-btn">Загрузить GGipes для Windows</a>
+        <div class="subtext">Бесплатно • Совместимо с Windows 10/11</div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="card">
+            <div class="card-icon">⚡</div>
+            <h3>Высокая скорость</h3>
+            <p>Оптимизированный движок обеспечивает мгновенный запуск страниц и минимальное потребление оперативной памяти.</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🛡️</div>
+            <h3>Защита данных</h3>
+            <p>Встроенные блокировщики трекеров и рекламы гарантируют приватность каждого вашего шага в сети.</p>
+        </div>
+        <div class="card">
+            <div class="card-icon">🏛️</div>
+            <h3>Интеграция с KZ-сервисами</h3>
+            <p>Быстрый доступ и встроенная поддержка работы с государственными и финансовыми порталами Казахстана.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 GGipes Browser Project, Казахстан. Все права защищены.</p>
+    </footer>
+
+</body>
+</html>
